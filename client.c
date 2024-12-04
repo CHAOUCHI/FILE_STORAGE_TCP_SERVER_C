@@ -41,10 +41,28 @@ int main(int argc, char** argv){
     if(client_fd < 0) return EXIT_FAILURE;
 
     /**
+     * Send file name to server
+     */
+    char path_to_file[BUFSIZ]; memset(path_to_file,0,BUFSIZ);
+    printf("Tapez le chemin(relatif) du fichier :\n");
+
+    fgets(path_to_file,BUFSIZ,stdin);
+    path_to_file[strlen(path_to_file)-1] = 0;
+    printf("path_to_file : %s\n",path_to_file);
+
+    // get file name
+    char* file_name = filePathTofileName(path_to_file);
+    printf("file_name : %s\n",file_name);
+
+    // send file_name
+    send(client_fd,file_name,strlen(file_name),0);
+
+
+    /**
      * SEND FILE TO SERVER
      */
     // Open the file to be send
-    FILE* file_to_send_fd = fopen("original/chat.png","rb"); // Read binary only Access
+    FILE* file_to_send_fd = fopen(path_to_file,"rb"); // Read binary only Access
     
     // Get file size (bytes)
     fseek(file_to_send_fd,0,SEEK_END);

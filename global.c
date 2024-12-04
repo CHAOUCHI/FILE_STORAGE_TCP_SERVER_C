@@ -116,3 +116,18 @@ int initTCPClient(int client_port, char* server_ip,int server_port){
     return client_fd;
 }
 
+
+/**
+ * @return the filename or NULL
+ */
+char* filePathTofileName(char* file_path){
+    char* file_name = NULL;
+    for (int i = strlen(file_path)-1; i >= 0; i--)
+    {
+        if(file_path[i] == '/'){
+           file_name = &(file_path[i+1]);
+        }
+    }
+    return file_name;
+    
+}
